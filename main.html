@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClinicSync - ABDM-Integrated Healthcare Platform for Tier-2 & Tier-3 India</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Epilogue:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0A4D4E;
+            --primary-light: #0F6A6C;
+            --accent: #D97D54;
+            --accent-bright: #F49867;
+            --text-dark: #1A2B2E;
+            --text-muted: #5A6C6F;
+            --bg-cream: #FDF8F3;
+            --bg-light: #F5F9F9;
+            --border-subtle: #E1EAEA;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Epilogue', sans-serif;
+            color: var(--text-dark);
+            background: var(--bg-cream);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(253, 248, 243, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+        }
+
+        .logo {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.75rem;
+            color: var(--primary);
+            font-weight: 400;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            letter-spacing: 0.02em;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 5rem;
+            padding: 8rem 0 6rem;
+            background: linear-gradient(135deg, var(--bg-cream) 0%, var(--bg-light) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(217, 125, 84, 0.1) 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 4.5rem;
+            line-height: 1.1;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        .hero-subtitle {
+            font-size: 1.35rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 1.25rem;
+            margin-bottom: 3rem;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 1rem 2.25rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            display: inline-block;
+            letter-spacing: 0.02em;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 16px rgba(10, 77, 78, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(10, 77, 78, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .stat {
+            opacity: 0;
+            animation: fadeInUp 0.8s forwards;
+        }
+
+        .stat:nth-child(1) { animation-delay: 0.2s; }
+        .stat:nth-child(2) { animation-delay: 0.4s; }
+        .stat:nth-child(3) { animation-delay: 0.6s; }
+
+        .stat-number {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.5rem;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .hero-visual {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(10, 77, 78, 0.1);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .mockup-card {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        .mockup-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .mockup-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Problem Section */
+        .problem-section {
+            padding: 6rem 0;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-tag {
+            display: inline-block;
+            padding: 0.5rem 1.25rem;
+            background: var(--bg-light);
+            color: var(--primary);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .problem-card {
+            background: var(--bg-cream);
+            padding: 2.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-subtle);
+            transition: all 0.3s;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(10, 77, 78, 0.08);
+        }
+
+        .problem-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .problem-card h3 {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .problem-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        /* Solution Features */
+        .features-section {
+            padding: 6rem 0;
+            background: var(--primary);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .features-section::before {
+            content: '';
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+            bottom: -400px;
+            left: -400px;
+            border-radius: 50%;
+        }
+
+        .features-section .section-header h2,
+        .features-section .section-tag {
+            color: white;
+        }
+
+        .features-section .section-tag {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .features-section .section-header p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            position: relative;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        /* Market Opportunity */
+        .market-section {
+            padding: 6rem 0;
+            background: white;
+        }
+
+        .market-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .market-visual {
+            background: var(--bg-cream);
+            padding: 3rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .metric-row:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .metric-value {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .market-highlights {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .highlight-item {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .highlight-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--accent);
+            border-radius: 8px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .highlight-text h4 {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .highlight-text p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Innovation Section */
+        .innovation-section {
+            padding: 6rem 0;
+            background: var(--bg-light);
+        }
+
+        .innovation-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .innovation-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-subtle);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .innovation-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent) 0%, var(--accent-bright) 100%);
+        }
+
+        .innovation-number {
+            font-family: 'DM Serif Display', serif;
+            font-size: 3rem;
+            color: var(--bg-light);
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-weight: 400;
+        }
+
+        .innovation-card h3 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .innovation-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        /* Timeline */
+        .timeline-section {
+            padding: 6rem 0;
+            background: white;
+        }
+
+        .timeline {
+            max-width: 900px;
+            margin: 3rem auto 0;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 2rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-subtle);
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-dot {
+            width: 4rem;
+            height: 4rem;
+            background: var(--accent);
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            z-index: 1;
+        }
+
+        .timeline-content {
+            flex: 1;
+            background: var(--bg-cream);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .timeline-content h3 {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .timeline-period {
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .timeline-content ul {
+            list-style: none;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .timeline-content li {
+            padding-left: 1.5rem;
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* Pricing */
+        .pricing-section {
+            padding: 6rem 0;
+            background: var(--bg-light);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 16px;
+            border: 2px solid var(--border-subtle);
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .pricing-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(10, 77, 78, 0.15);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--accent);
+            position: relative;
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .pricing-tier {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-amount {
+            font-family: 'DM Serif Display', serif;
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-period {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            padding: 0.75rem 0;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--bg-light);
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        /* Impact */
+        .impact-section {
+            padding: 6rem 0;
+            background: white;
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .impact-card {
+            background: var(--bg-cream);
+            padding: 3rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-subtle);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .impact-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(217, 125, 84, 0.1) 0%, transparent 70%);
+        }
+
+        .impact-stat {
+            font-family: 'DM Serif Display', serif;
+            font-size: 4rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .impact-card h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .impact-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        .cta-section p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand h3 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.75rem;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand p {
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .footer-links h4 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-bright);
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero-content,
+            .market-content {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid,
+            .innovation-grid,
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .problem-grid,
+            .impact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">ClinicSync</div>
+            <ul class="nav-links">
+                <li><a href="#problem">Problem</a></li>
+                <li><a href="#solution">Solution</a></li>
+                <li><a href="#market">Market</a></li>
+                <li><a href="#innovation">Innovation</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#impact">Impact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div>
+                    <h1>Digitizing Healthcare for Tier-2 & Tier-3 India</h1>
+                    <p class="hero-subtitle">ABDM-integrated clinic management platform empowering small healthcare providers with affordable, offline-first digital infrastructure</p>
+                    
+                    <div class="cta-group">
+                        <a href="#pricing" class="btn-primary">View Pricing</a>
+                        <a href="#solution" class="btn-secondary">Explore Platform</a>
+                    </div>
+
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <span class="stat-number">150K</span>
+                            <span class="stat-label">Target Clinics</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">₹20B</span>
+                            <span class="stat-label">Market by 2034</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">20.4%</span>
+                            <span class="stat-label">Annual Growth</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="mockup-card">
+                        <h4>📅 Smart Appointment Management</h4>
+                        <p>Reduce no-shows by 30% with automated SMS & WhatsApp reminders</p>
+                    </div>
+                    <div class="mockup-card">
+                        <h4>🏥 ABDM Integration</h4>
+                        <p>One-click ABHA creation and health record retrieval</p>
+                    </div>
+                    <div class="mockup-card">
+                        <h4>📱 Offline-First Architecture</h4>
+                        <p>Works seamlessly without internet connectivity</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section id="problem" class="problem-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">The Challenge</span>
+                <h2>Healthcare Infrastructure Gaps in India</h2>
+                <p>Small private clinics in Tier-2 and Tier-3 cities face critical barriers to digital health adoption</p>
+            </div>
+
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">📊</div>
+                    <h3>Doctor-Patient Disparity</h3>
+                    <p>Rural and Tier-3 regions face doctor-to-patient ratios approaching 1:10,000, while urban areas maintain 1:800. 80% of specialists practice in urban centers despite 70% of India's population residing in rural areas.</p>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-icon">📄</div>
+                    <h3>Paper-Based Systems</h3>
+                    <p>Small clinics operate with manual record systems, lacking systematic patient follow-up mechanisms and connectivity to broader healthcare networks, resulting in lost revenue and inefficient care.</p>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-icon">💰</div>
+                    <h3>Implementation Barriers</h3>
+                    <p>ABDM integration requires specialized expertise and capital costs exceeding the financial capacity of small providers, with unreliable internet making cloud-dependent systems impractical.</p>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-icon">🔄</div>
+                    <h3>Operational Inefficiencies</h3>
+                    <p>Patients miss critical medications, diagnostic tests are unnecessarily duplicated, follow-up appointments are lost, and clinics cannot participate in insurance networks requiring digital records.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Features -->
+    <section id="solution" class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Our Solution</span>
+                <h2>Comprehensive Clinic Management Platform</h2>
+                <p>Affordable, clinic-centric platform that abstracts ABDM complexity while addressing practical operational challenges</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>📋 Patient Queue & Appointments</h3>
+                    <p>Digital queue management replacing manual token systems with automated scheduling algorithms, reducing patient waiting times and streamlining reception workflows.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>🔗 ABDM Integration Layer</h3>
+                    <p>One-click ABHA identifier creation, automated health record retrieval, secure consent workflows, and synchronization of clinical data to longitudinal health records.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>📝 Electronic Health Records</h3>
+                    <p>Digital visit documentation, vital signs monitoring, prescription generation with drug interaction checking, and diagnostic test ordering with automatic ABDM sync.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>💬 Automated Follow-up</h3>
+                    <p>WhatsApp and SMS appointment reminders, medication adherence notifications, test result alerts, and rule-based triage algorithms for priority cases.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>🎥 Telemedicine Integration</h3>
+                    <p>Direct integration with eSanjeevani government platform enabling one-click video consultations for patients unable to visit physically.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>🌐 Offline-First Design</h3>
+                    <p>All core functionality operates without internet access. Automatic synchronization with sophisticated conflict resolution for multi-facility updates during offline periods.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Opportunity -->
+    <section id="market" class="market-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Market Analysis</span>
+                <h2>Substantial Growth Opportunity</h2>
+                <p>India's telemedicine market and digital health mandates create favorable conditions for platform adoption</p>
+            </div>
+
+            <div class="market-content">
+                <div class="market-visual">
+                    <div class="metric-row">
+                        <span class="metric-label">Total Addressable Market</span>
+                        <span class="metric-value">150K</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">5-Year Target Clinics</span>
+                        <span class="metric-value">650</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Year 5 Revenue Projection</span>
+                        <span class="metric-value">₹85.8L</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Market CAGR (2025-2034)</span>
+                        <span class="metric-value">20.4%</span>
+                    </div>
+                </div>
+
+                <div class="market-highlights">
+                    <div class="highlight-item">
+                        <div class="highlight-icon">📈</div>
+                        <div class="highlight-text">
+                            <h4>Digital Health Mandates</h4>
+                            <p>ABDM implementation and insurance networks requiring digital record-keeping create regulatory pressure. Compliance expected to become effectively mandatory by 2027-2028.</p>
+                        </div>
+                    </div>
+
+                    <div class="highlight-item">
+                        <div class="highlight-icon">👴</div>
+                        <div class="highlight-text">
+                            <h4>Aging Population</h4>
+                            <p>India's population aged 60+ will increase from 140M in 2024 to 320M by 2050, driving chronic disease management needs aligned with platform capabilities.</p>
+                        </div>
+                    </div>
+
+                    <div class="highlight-item">
+                        <div class="highlight-icon">📱</div>
+                        <div class="highlight-text">
+                            <h4>Infrastructure Improvements</h4>
+                            <p>Smartphone penetration expanding to 950M users by 2035, with 4G/5G coverage extending throughout Tier-3 cities, creating foundational infrastructure for adoption.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Innovation -->
+    <section id="innovation" class="innovation-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Technical Innovation</span>
+                <h2>Patentable Intellectual Property</h2>
+                <p>Three specific technical innovations addressing genuine challenges in distributed healthcare systems</p>
+            </div>
+
+            <div class="innovation-grid">
+                <div class="innovation-card">
+                    <span class="innovation-number">01</span>
+                    <h3>Offline-First ABDM Consent Management</h3>
+                    <p>Cryptographic queuing mechanisms enabling legally valid ABDM compliance in low-connectivity environments with Byzantine fault tolerance during reconciliation.</p>
+                </div>
+
+                <div class="innovation-card">
+                    <span class="innovation-number">02</span>
+                    <h3>Predictive Health Record Pre-Fetching</h3>
+                    <p>Statistical models predicting ABHA identifiers requiring record access, pre-fetching during nighttime hours to enable instant physician access over limited bandwidth.</p>
+                </div>
+
+                <div class="innovation-card">
+                    <span class="innovation-number">03</span>
+                    <h3>Deterministic Conflict Resolution</h3>
+                    <p>State machines applying clinical priority rules for reconciling contradictory medical data, ensuring medically critical information takes precedence regardless of network timing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Development Timeline -->
+    <section class="timeline-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Implementation</span>
+                <h2>18-24 Month Development Timeline</h2>
+                <p>Realistic development roadmap for achieving production-ready ABDM integration</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot">M1-3</div>
+                    <div class="timeline-content">
+                        <h3>Foundation & Core Application</h3>
+                        <p class="timeline-period">Months 1-3</p>
+                        <ul>
+                            <li>Problem validation through 10-15 clinic interviews</li>
+                            <li>Technical architecture design and database schema</li>
+                            <li>Patient registration and appointment scheduling</li>
+                            <li>Basic queue management and SMS reminders</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">M4-6</div>
+                    <div class="timeline-content">
+                        <h3>Digital Health Records</h3>
+                        <p class="timeline-period">Months 4-6</p>
+                        <ul>
+                            <li>Comprehensive EHR functionality implementation</li>
+                            <li>Clinical documentation templates</li>
+                            <li>Prescription generation with drug databases</li>
+                            <li>Diagnostic test ordering workflows</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">M7-12</div>
+                    <div class="timeline-content">
+                        <h3>ABDM Integration - Phase One</h3>
+                        <p class="timeline-period">Months 7-12</p>
+                        <ul>
+                            <li>Sandbox environment setup and API familiarization</li>
+                            <li>ABHA identifier creation workflows</li>
+                            <li>Health record retrieval with manual consent</li>
+                            <li>FHIR data format conversions</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">M13-18</div>
+                    <div class="timeline-content">
+                        <h3>Offline Architecture & Advanced ABDM</h3>
+                        <p class="timeline-period">Months 13-18</p>
+                        <ul>
+                            <li>Offline-first data synchronization with conflict resolution</li>
+                            <li>Automated consent management workflows</li>
+                            <li>Encryption and security hardening</li>
+                            <li>Pilot deployment with 3-5 partner clinics</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">M19-24</div>
+                    <div class="timeline-content">
+                        <h3>Polish & Market Preparation</h3>
+                        <p class="timeline-period">Months 19-24</p>
+                        <ul>
+                            <li>UX refinement based on pilot feedback</li>
+                            <li>Regional language localization and voice input</li>
+                            <li>Analytics dashboards and reporting features</li>
+                            <li>Security audits and penetration testing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="pricing-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Pricing</span>
+                <h2>Flexible Plans for Every Clinic</h2>
+                <p>Affordable monthly subscriptions aligned with clinic size and feature requirements</p>
+            </div>
+
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <p class="pricing-tier">Starter</p>
+                    <div class="pricing-amount">₹300</div>
+                    <p class="pricing-period">per month</p>
+                    <ul class="pricing-features">
+                        <li>Basic appointment scheduling</li>
+                        <li>Patient registration</li>
+                        <li>Digital queue management</li>
+                        <li>SMS reminder services</li>
+                        <li>For 50-100 patients/month</li>
+                    </ul>
+                    <a href="#" class="btn-primary">Get Started</a>
+                </div>
+
+                <div class="pricing-card featured">
+                    <span class="pricing-badge">Most Popular</span>
+                    <p class="pricing-tier">Professional</p>
+                    <div class="pricing-amount">₹1,000</div>
+                    <p class="pricing-period">per month</p>
+                    <ul class="pricing-features">
+                        <li>Full ABDM integration</li>
+                        <li>eSanjeevani telemedicine</li>
+                        <li>Advanced analytics dashboard</li>
+                        <li>Enhanced follow-up automation</li>
+                        <li>WhatsApp notifications</li>
+                        <li>Unlimited patients</li>
+                    </ul>
+                    <a href="#" class="btn-primary">Get Started</a>
+                </div>
+
+                <div class="pricing-card">
+                    <p class="pricing-tier">Enterprise</p>
+                    <div class="pricing-amount">₹2,000</div>
+                    <p class="pricing-period">per month</p>
+                    <ul class="pricing-features">
+                        <li>Multi-location management</li>
+                        <li>Centralized dashboards</li>
+                        <li>Advanced reporting</li>
+                        <li>Hospital system integration</li>
+                        <li>Dedicated support</li>
+                        <li>Custom workflows</li>
+                    </ul>
+                    <a href="#" class="btn-primary">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact -->
+    <section id="impact" class="impact-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Social Impact</span>
+                <h2>Bridging Healthcare Access Gaps</h2>
+                <p>Measurable improvements in healthcare quality and patient outcomes</p>
+            </div>
+
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <span class="impact-stat">30%</span>
+                    <h3>Reduction in No-Show Rates</h3>
+                    <p>Automated reminders reduce follow-up appointment no-shows from 25-40% to 10-15%, ensuring patients with chronic conditions receive continuous care rather than episodic crisis management.</p>
+                </div>
+
+                <div class="impact-card">
+                    <span class="impact-stat">₹15K</span>
+                    <h3>Annual Patient Savings</h3>
+                    <p>Telemedicine integration saves patients 5,000-15,000 rupees annually in travel costs, lost wages, and hospitalization expenses when substituting for in-person specialist consultations.</p>
+                </div>
+
+                <div class="impact-card">
+                    <span class="impact-stat">₹3K</span>
+                    <h3>Diagnostic Test Savings</h3>
+                    <p>ABDM integration eliminates redundant testing, saving patients 1,000-3,000 rupees per visit by making previous diagnostic results accessible across facilities.</p>
+                </div>
+
+                <div class="impact-card">
+                    <span class="impact-stat">100</span>
+                    <h3>Better Chronic Care Management</h3>
+                    <p>For a typical clinic managing 100 chronic disease patients, improved follow-up completion represents 25 patients receiving better outcomes through continuity of care.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Transform Your Clinic?</h2>
+            <p>Join the digital healthcare revolution with ClinicSync</p>
+            <div class="cta-group" style="justify-content: center;">
+                <a href="#" class="btn-primary" style="background: white; color: var(--primary);">Schedule a Demo</a>
+                <a href="#" class="btn-secondary" style="border-color: white; color: white;">Download Feasibility Study</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>ClinicSync</h3>
+                    <p>Empowering small healthcare providers in Tier-2 and Tier-3 India with affordable, ABDM-integrated digital infrastructure.</p>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#solution">Features</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Team</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Case Studies</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 ClinicSync. A Feasibility Study by Pratham Pai, Canara Engineering College, VTU. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
